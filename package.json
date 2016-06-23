@@ -24,6 +24,7 @@
     "node-uuid": "^1.4.7"
   },
   "devDependencies": {
+    "babel-eslint": "^6.1.0",
     "eslint": "^2.13.1",
     "gulp": "^3.8.11",
     "gulp-filter": "^2.0.0",
