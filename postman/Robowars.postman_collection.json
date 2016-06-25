@@ -1,0 +1,98 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Robowars",
+		"_postman_id": "73702aa0-cbf7-d2b5-d0d2-6d9a087c42cf",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "localhost:3000/_health",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": "tests[\"Body matches string\"] = responseBody.has(\"ok\");"
+					}
+				}
+			],
+			"request": {
+				"url": "localhost:3000/_health",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"description": "Validate health endpoint"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/move single robot move",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": "var data = JSON.parse(responseBody);\ntests[\"Robot has moved north\"] = (data[0].currentPos.y == 2);\ntests[\"Robot has moved kept orientation\"] = (data[0].currentPos.orientation == \"N\");"
+					}
+				}
+			],
+			"request": {
+				"url": "localhost:3000/move",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"upperX\":5,\"upperY\":5,\"robots\":[{\"name\":\"Daneel\",\"startPos\":{\"x\":1,\"y\":1,\"orientation\":\"N\"},\"commands\":[\"M\"]}]}"
+				},
+				"description": "Validate move endpoint: single move"
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:3000/move single robot series for rotations and moves",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": "var data = JSON.parse(responseBody);\ntests[\"Robot has moved Y\"] = (data[0].currentPos.y == 3);\ntests[\"Robot has moved X\"] = (data[0].currentPos.x == 1);\ntests[\"Robot has moved kept orientation\"] = (data[0].currentPos.orientation == \"N\");"
+					}
+				}
+			],
+			"request": {
+				"url": "localhost:3000/move",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"upperX\":5,\"upperY\":5,\"robots\":[{\"name\":\"Giskard\",\"startPos\":{\"x\":1,\"y\":2,\"orientation\":\"N\"},\"commands\":[\"L\", \"M\", \"L\", \"M\", \"L\", \"M\", \"L\", \"M\", \"M\"]}]}"
+				},
+				"description": "Validate move endpoint: single robot, multiple moves and rotations"
+			},
+			"response": []
+		}
+	]
+}
