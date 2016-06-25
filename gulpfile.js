@@ -13,13 +13,13 @@ gulp.task('pre-test', function () {
 gulp.task('test', ['pre-test'], function () {
   return gulp.src(['./lib/**/*-test.js'])
     .pipe(mocha())
-    .pipe(istanbul.writeReports())
+    .pipe(istanbul.writeReports({dir: './coverage/test'}))
     .pipe(istanbul.enforceThresholds({ thresholds: { global: 90 } }));
 });
 
 gulp.task('itest', ['pre-test'], function () {
   return gulp.src(['./itest/**/*-test.js'])
     .pipe(mocha())
-    .pipe(istanbul.writeReports())
+    .pipe(istanbul.writeReports({dir: './coverage/itest'}))
     .pipe(istanbul.enforceThresholds({ thresholds: { global: 90 } }));
 });
