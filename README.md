@@ -1,5 +1,7 @@
 ## RoboWars
 
+[![Build Status](https://travis-ci.org/BobbyKostadinov/robowars.svg?branch=master)](https://travis-ci.org/BobbyKostadinov/robowars)
+
 This is repository is a programming exercise to deliver an application that given a matrix x,y and an array of robots with starting coordinates and series of commands, responds with the robots end destination
 
 ### Tech Stack
@@ -9,6 +11,7 @@ This is repository is a programming exercise to deliver an application that give
 - unit and integration tests with mocha and should.js
 - API tests provided though Postman
 - Gulp for task management - used to run test and integration test
+- Travis used to test on git events
 
 ### Running The Application
     npm install
@@ -107,8 +110,13 @@ This folder holds application models. They are:
 
 Each folder contains a **/test** folder. Here, is the location of the unit tests, written with mocha nad should.js for assertion.
 
-**To do note**: Find a better way to mock ES6 modules. As a new tool, I have not found a good enough mocking tool and a dependency injection would suit better rather than raw import statements however due to the size of the application this seems an overkill
-I have used proxyquire but as this works with Node's require I've had to use require statements rather than ES6 imports.
-
 **/itest**
 The location for integration tests. The goal for those tests is to run functions together, rather than in isolation and ensure higher level testing.
+
+
+
+### TODO:
+- Find a better way to mock ES6 modules. As a new tool, I have not found a good enough mocking tool and a dependency injection would suit better rather than raw import statements however due to the size of the application this seems an overkill
+I have used proxyquire but as this works with Node's require I've had to use require statements rather than ES6 imports.
+
+- Performance test for calculations - ensure calculations would not take long in extreme data ranges as this would block the event loop. I've tested with 50 concurrent requests using the Postman tests and that responds within 20ms which is good enough, but the grids used are small.

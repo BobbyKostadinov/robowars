@@ -8,7 +8,7 @@
 	},
 	"item": [
 		{
-			"name": "localhost:3000/_health",
+			"name": "_health",
 			"event": [
 				{
 					"listen": "test",
@@ -19,7 +19,7 @@
 				}
 			],
 			"request": {
-				"url": "localhost:3000/_health",
+				"url": "http://robowars.eu-west-1.elasticbeanstalk.com/_health",
 				"method": "GET",
 				"header": [
 					{
@@ -37,7 +37,7 @@
 			"response": []
 		},
 		{
-			"name": "localhost:3000/move single robot move",
+			"name": "/move - single robot move",
 			"event": [
 				{
 					"listen": "test",
@@ -48,7 +48,7 @@
 				}
 			],
 			"request": {
-				"url": "localhost:3000/move",
+				"url": "http://robowars.eu-west-1.elasticbeanstalk.com/move",
 				"method": "PUT",
 				"header": [
 					{
@@ -66,7 +66,7 @@
 			"response": []
 		},
 		{
-			"name": "localhost:3000/move single robot series for rotations and moves",
+			"name": "/move -  single robot series for rotations and moves",
 			"event": [
 				{
 					"listen": "test",
@@ -77,7 +77,7 @@
 				}
 			],
 			"request": {
-				"url": "localhost:3000/move",
+				"url": "http://robowars.eu-west-1.elasticbeanstalk.com/move",
 				"method": "PUT",
 				"header": [
 					{
@@ -91,6 +91,35 @@
 					"raw": "{\"upperX\":5,\"upperY\":5,\"robots\":[{\"name\":\"Giskard\",\"startPos\":{\"x\":1,\"y\":2,\"orientation\":\"N\"},\"commands\":[\"L\", \"M\", \"L\", \"M\", \"L\", \"M\", \"L\", \"M\", \"M\"]}]}"
 				},
 				"description": "Validate move endpoint: single robot, multiple moves and rotations"
+			},
+			"response": []
+		},
+		{
+			"name": "/move -  two robots with series for rotations and moves",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": "var data = JSON.parse(responseBody);\ntests[\"Robot 1 has moved X\"] = (data[0].currentPos.x == 1);\ntests[\"Robot 1 has moved Y\"] = (data[0].currentPos.y == 3);\ntests[\"Robot 2 has moved X\"] = (data[1].currentPos.x == 5);\ntests[\"Robot 2 has moved Y\"] = (data[1].currentPos.y == 1);\ntests[\"Robot 1 has moved and is in correct orientation\"] = (data[0].currentPos.orientation == \"N\");\ntests[\"Robot 21 has moved and is in correct orientation\"] = (data[1].currentPos.orientation == \"E\");"
+					}
+				}
+			],
+			"request": {
+				"url": "http://robowars.eu-west-1.elasticbeanstalk.com/move",
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"upperX\": 5,\n\t\"upperY\": 5,\n\t\"robots\": [{\n\t\t\"name\": \"Giskard\",\n\t\t\"startPos\": {\n\t\t\t\"x\": 1,\n\t\t\t\"y\": 2,\n\t\t\t\"orientation\": \"N\"\n\t\t},\n\t\t\"commands\": [\"L\", \"M\", \"L\", \"M\", \"L\", \"M\", \"L\", \"M\", \"M\"]\n\t}, {\n\t\t\"name\": \"Daneel\",\n\t\t\"startPos\": {\n\t\t\t\"x\": 3,\n\t\t\t\"y\": 3,\n\t\t\t\"orientation\": \"E\"\n\t\t},\n\t\t\"commands\": [\"M\", \"M\", \"R\", \"M\", \"M\", \"R\", \"M\", \"R\", \"R\", \"M\"]\n\t}]\n}"
+				},
+				"description": "Validate move endpoint: two robots, multiple moves and rotations"
 			},
 			"response": []
 		}
